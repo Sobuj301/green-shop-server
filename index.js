@@ -108,8 +108,6 @@ async function run() {
       res.send(result)
     })
 
-    // Update service
-
     app.patch('/update/:id',async(req,res) =>{
       const service = req.body;
       const id = req.params.id;
@@ -138,6 +136,15 @@ async function run() {
       const booking = req.body;
       console.log(booking)
       const result = await bookingCollection.insertOne(booking)
+      res.send(result)
+    })
+
+
+    app.get('/bookings',async(req,res) =>{
+      const userEmail = req.query.userEmail;
+      const query ={userEmail:userEmail};
+      const cursor = bookingCollection.find(query)
+      const result = await cursor.toArray()
       res.send(result)
     })
 
